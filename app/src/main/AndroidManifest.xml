@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserInformationActivity" />
+        <activity android:name=".PracticeTopicsActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".BiblicalFactsActivity"></activity>
     </application>
 
 </manifest>

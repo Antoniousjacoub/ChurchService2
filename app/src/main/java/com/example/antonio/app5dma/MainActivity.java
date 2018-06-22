@@ -1,5 +1,6 @@
 package com.example.antonio.app5dma;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_practice_topics)
     TextView tv_practice_topics;
 
-    @BindView(R.id.tv_real_taxt)
-    TextView tv_real_taxt;
+    @BindView(R.id.tv_biblical_facts)
+    TextView tv_biblical_facts;
 
     Unbinder unbinder;
 
@@ -40,24 +41,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.tv_real_taxt,R.id.tv_7gra_7ya,R.id.tv_about_program,R.id.tv_user_info,R.id.tv_practice_topics})
-    void aVoid(View view,int pos){
+    @OnClick({R.id.tv_biblical_facts,R.id.tv_7gra_7ya,R.id.tv_about_program,R.id.tv_user_info,R.id.tv_practice_topics})
+    void onClicked(View view){
 
         switch (view.getId()){
-
-            case R.id.tv_7gra_7ya:
-
-                break;
-
             case R.id.tv_about_program:
+                onDoIntentTo(AboutUsActivity.class);
                 break;
-            case R.id.tv_real_taxt:
+            case R.id.tv_biblical_facts:
+                onDoIntentTo(BiblicalFactsActivity.class);
                 break;
             case R.id.tv_user_info:
+                onDoIntentTo(UserInformationActivity.class);
                 break;
-                
+            case R.id.tv_practice_topics:
+                onDoIntentTo(PracticeTopicsActivity.class);
+                break;
+
 
         }
 
     }
+
+    private void onDoIntentTo(Class<?> openActivity){
+
+      Intent intent=new Intent(this,openActivity);
+        startActivity(intent);
+
+    }
+
 }
