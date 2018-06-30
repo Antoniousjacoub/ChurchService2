@@ -1,4 +1,4 @@
-package com.example.antonio.app5dma;
+package com.example.antonio.marinaApp;
 
 import org.junit.Test;
 

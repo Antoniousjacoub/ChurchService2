@@ -1,4 +1,4 @@
-package com.example.antonio.app5dma;
+package com.example.antonio.marinaApp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

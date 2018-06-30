@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "958607357351",
+    "firebase_url": "https://marinaapp-52290.firebaseio.com",
+    "project_id": "marinaapp-52290",
+    "storage_bucket": "marinaapp-52290.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958607357351:android:dfdfe49355c38ac1",
+        "android_client_info": {
+          "package_name": "com.example.antonio.marinaApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958607357351-3jp7n0m4aa3o2h1t4v3nc7sq8cb87id9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG5HCdL5BgdanmvM9-CvkV5w9dwFqSVUg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

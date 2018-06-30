@@ -4,4 +4,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="dark_blue">#5181c0</color>
+    <color name="cure_green">#01ACAB</color>
+    <color name="letter_bg_color">#1C86EE</color>
+    <color name="gray_button">#55000000</color>
+    <color name="white_transparent">#B3ffffff</color>
+
+    <color name="doctors_color">#02acaa</color>
+
 </resources>

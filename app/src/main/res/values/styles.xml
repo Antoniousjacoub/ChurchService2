@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="android:textColorHint">@color/cure_green</item>
+        <item name="android:textSize">15sp</item>
+        <item name="colorAccent">@color/cure_green</item>
+        <item name="colorControlNormal">@color/cure_green</item>
+        <item name="colorControlActivated">@color/cure_green</item>
+    </style>
 </resources>

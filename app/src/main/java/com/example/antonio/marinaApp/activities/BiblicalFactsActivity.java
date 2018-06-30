@@ -1,7 +1,9 @@
-package com.example.antonio.app5dma;
+package com.example.antonio.marinaApp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.antonio.marinaApp.R;
 
 public class BiblicalFactsActivity extends AppCompatActivity {
 
