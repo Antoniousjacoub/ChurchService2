@@ -2,11 +2,16 @@ package com.example.antonio.marinaApp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.antonio.marinaApp.R;
+import com.example.antonio.marinaApp.adapters.UserAdapter;
 import com.example.antonio.marinaApp.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +35,8 @@ public class UserInformationActivity extends AppCompatActivity {
     @BindView(R.id.container_add_5adem)
     LinearLayout container_add_5adem;
 
+    @BindView(R.id.rv_all_user)
+    RecyclerView rv_all_user;
     Unbinder unbinder;
     private ArrayList<User> userArrayList=new ArrayList<>();
     User user =new User();
@@ -42,6 +49,13 @@ public class UserInformationActivity extends AppCompatActivity {
         getDataFromFirebase();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataFromFirebase();
+
+    }
+
     private void getDataFromFirebase(){
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -50,20 +64,28 @@ public class UserInformationActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                userArrayList.clear();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                   // String picUrl = ds.child("address").getValue(String.class);
-                    //Boolean isLike = ds.child("isLike").getValue(picUrl.class);
-                    //Log.d("TAG", picUrl + " / " + isLike);
 
-                    user.setFirst_name(ds.child("first_name").getValue(String.class));
-                    user.setMidle_name(ds.child("midle_name").getValue(String.class));
-                    user.setLast_name(ds.child("last_name").getValue(String.class));
-                    user.setGender(ds.child("gender").getValue(String.class));
-                    user.setBithdate(ds.child("bithdate").getValue(String.class));
+                    User user = ds.getValue(User.class);
+
+//                    user.setFirst_name(ds.child("first_name").getValue(String.class));
+//                    user.setMidle_name(ds.child("midle_name").getValue(String.class));
+//                    user.setLast_name(ds.child("last_name").getValue(String.class));
+//                    user.setGender(ds.child("gender").getValue(String.class));
+//                    user.setBithdate(ds.child("bithdate").getValue(String.class));
                     userArrayList.add(user);
 
                 }
 
+                if (!userArrayList.isEmpty()||userArrayList!=null) {
+                    UserAdapter adapter = new UserAdapter(userArrayList, UserInformationActivity.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    rv_all_user.setLayoutManager(mLayoutManager);
+                    rv_all_user.setItemAnimator(new DefaultItemAnimator());
+                    rv_all_user.setAdapter(adapter);
+
+                }
 
             }
 

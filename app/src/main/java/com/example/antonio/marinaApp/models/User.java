@@ -10,6 +10,16 @@ public class User {
     private String last_name;
     private String gender;
     private String bithdate;
+    private String profile_image_url;
+
+
+    public String getProfile_image_url() {
+        return profile_image_url;
+    }
+
+    public void setProfile_image_url(String profile_image_url) {
+        this.profile_image_url = profile_image_url;
+    }
 
     public String getFirst_name() {
         return first_name;

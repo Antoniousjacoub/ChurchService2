@@ -2,22 +2,26 @@ package com.example.antonio.marinaApp.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.antonio.marinaApp.MainActivity;
 import com.example.antonio.marinaApp.R;
 import com.example.antonio.marinaApp.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,8 +34,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +52,7 @@ import static com.example.antonio.marinaApp.ulities.Helpers.showMessage;
 
 public class UserInfoDetailsActivity extends AppCompatActivity {
 
+    String TAG=UserInfoDetailsActivity.class.getName();
     //Firebase
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -75,13 +83,20 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
     @BindView(R.id.btn_cancel)
     Button btn_cancel;
 
+
+    @BindView(R.id.txt_birthdate)
+    TextView txt_birthdate;
+
     @BindView(R.id.img_calendar)
     ImageView img_calender;
     Unbinder unbinder;
     private File mFile_Profile_photo;
     private int PROFILE_PHOTO=100;
-
-
+    private final int DIALOG_ID_BirthDate=0;
+    int cur = 0;
+    int year_x, month_x, day_x;
+    String setToday;
+    Calendar myCalendar = Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,18 +105,83 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
         unbinder= ButterKnife.bind(this);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        year_x = myCalendar.get(Calendar.YEAR);
+        month_x = myCalendar.get(Calendar.MONTH);
+        day_x = myCalendar.get(Calendar.DAY_OF_MONTH);
+        String myFormat = "yyyy-MM-dd"; //In which format  you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        setToday = sdf.format(myCalendar.getTime());
 
     }
 
-    private void postDataToFirebase(){
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference yourRef = rootRef.child("user").push();
-        User user =new User();
-        user.setFirst_name("Toni");
-        user.setBithdate("18-8-1995");
 
-        yourRef.setValue(user);
 
+    private void openCalendar() {
+        showDialog(DIALOG_ID_BirthDate);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DIALOG_ID_BirthDate:
+                System.out.println("onCreateDialog  : " + id);
+                cur = DIALOG_ID_BirthDate;
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener, year_x, month_x, day_x);
+
+//                DatePickerDialog datePickerDialog = this.customDatePicker();
+//                return datePickerDialog;
+
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+    };
+
+    private void updateLabel() {
+
+        String myFormat = "yyyy-MM-dd"; //In which format  you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Log.e("TAG", "updateLabel: " + sdf.format(myCalendar.getTime()));
+
+        if (CheckDates(setToday, sdf.format(myCalendar.getTime()))) {
+            if (cur == DIALOG_ID_BirthDate) {
+
+                SpannableString spannableStringObject = new SpannableString(sdf.format(myCalendar.getTime()));
+                spannableStringObject.setSpan(new UnderlineSpan(), 0, spannableStringObject.length(), 0);
+                txt_birthdate.setText(spannableStringObject);
+            }
+        } else {
+
+            Toast.makeText(getApplicationContext(), "من فضلك أختر تاريخ ميلاد صالح", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public static boolean CheckDates(String todayDate, String selectDate) {
+
+        SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+
+        boolean b = false;
+        try {
+            if (dfDate.parse(selectDate).before(dfDate.parse(todayDate))) {
+                b = true;//If start date is before end date
+            } else if (dfDate.parse(selectDate).equals(dfDate.parse(todayDate))) {
+                b = true;//If two dates are equal
+            } else {
+                b = false; //If start date is after the end date
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     @OnClick({R.id.btn_cancel,R.id.btn_save,R.id.img_calendar,R.id.user_img_profile})
@@ -113,8 +193,32 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
 
             case R.id.btn_save:
              if (validForm()){
-                 uploadImage();
-                 postDataToFirebase();
+                 uploadImage(new HandleResponseUploadedImage() {
+                     @Override
+                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                         DatabaseReference yourRef = rootRef.child("user").push();
+                         User user =new User();
+                         user.setFirst_name(et_first_name.getText().toString().trim());
+                         if (!txt_birthdate.getText().toString().isEmpty())
+                             user.setBithdate(txt_birthdate.getText().toString());
+
+                         user.setProfile_image_url(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+
+                         Log.e(TAG,"Profile_URL_uri>>>>"+ taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+
+
+                         yourRef.setValue(user);
+
+                     }
+
+                     @Override
+                     public void onFailure(Exception e) {
+
+                     }
+                 });
+
                }
                 break;
 
@@ -123,6 +227,7 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.img_calendar:
+                openCalendar();
                 break;
 
 
@@ -178,7 +283,7 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void uploadImage() {
+    private void uploadImage(final HandleResponseUploadedImage handleResponseUploadedImage) {
 
         if(mFile_Profile_photo != null)
         {
@@ -186,19 +291,20 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
             progressDialog.setTitle("جاري التحميل");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("images/"+ Uri.fromFile(mFile_Profile_photo).getLastPathSegment());
             ref.putFile(Uri.fromFile(mFile_Profile_photo))
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                          showMessage(UserInfoDetailsActivity.this, "تم ");
+                            handleResponseUploadedImage.onSuccess(taskSnapshot);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
+                            handleResponseUploadedImage.onFailure(e);
                            //showMessage(UserInfoDetailsActivity.this, "Failed "+e.getMessage());
                         }
                     })
@@ -211,6 +317,11 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private interface HandleResponseUploadedImage {
+        void onSuccess(UploadTask.TaskSnapshot taskSnapshot);
+        void onFailure( Exception e);
     }
     public void openGallery(int req_code) {
 

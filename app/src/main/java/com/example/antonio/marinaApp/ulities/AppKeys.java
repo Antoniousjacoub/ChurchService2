@@ -6,5 +6,5 @@ package com.example.antonio.marinaApp.ulities;
 
 public class AppKeys {
 
-
+public static String STORAGE_URL_FOLDER="gs://marinaapp-52290.appspot.com/images/";
 }
