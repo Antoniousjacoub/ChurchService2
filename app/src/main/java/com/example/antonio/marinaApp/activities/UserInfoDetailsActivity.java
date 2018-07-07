@@ -48,6 +48,7 @@ import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.example.antonio.marinaApp.ulities.Helpers.compressImage;
 import static com.example.antonio.marinaApp.ulities.Helpers.showMessage;
 
 public class UserInfoDetailsActivity extends AppCompatActivity {
@@ -195,26 +196,40 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
              if (validForm()){
                  uploadImage(new HandleResponseUploadedImage() {
                      @Override
-                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                     public void onSuccess(String uriString) {
 
                          DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                          DatabaseReference yourRef = rootRef.child("user").push();
                          User user =new User();
+
                          user.setFirst_name(et_first_name.getText().toString().trim());
+
+                         if (!et_middle_name.getText().toString().isEmpty())
+                             user.setMidle_name(et_middle_name.getText().toString().trim());
+
+                         if (!et_last_name.getText().toString().isEmpty())
+                             user.setLast_name(et_last_name.getText().toString().trim());
+
                          if (!txt_birthdate.getText().toString().isEmpty())
                              user.setBithdate(txt_birthdate.getText().toString());
 
-                         user.setProfile_image_url(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                         if (rd_female.isChecked())
+                             user.setGender("female");
+                         else if (rd_male.isChecked())
+                             user.setGender("male");
 
-                         Log.e(TAG,"Profile_URL_uri>>>>"+ taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-
+                         user.setProfile_image_url(uriString);
 
                          yourRef.setValue(user);
+
+                         finish();
 
                      }
 
                      @Override
                      public void onFailure(Exception e) {
+
+                         showMessage(UserInfoDetailsActivity.this,"حدث خطأ حاول مرة اخرة");
 
                      }
                  });
@@ -256,8 +271,9 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                     //Handle the images
 
                     if (type == PROFILE_PHOTO) {
-                        mFile_Profile_photo = imagesFiles.get(0);
+                        mFile_Profile_photo = compressImage(imagesFiles.get(0));
 
+                        user_img_profile.setImageURI(Uri.fromFile(mFile_Profile_photo));
 
                     }
 
@@ -291,13 +307,20 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
             progressDialog.setTitle("جاري التحميل");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ Uri.fromFile(mFile_Profile_photo).getLastPathSegment());
+            final StorageReference ref = storageReference.child("images/"+ Uri.fromFile(mFile_Profile_photo).getLastPathSegment());
             ref.putFile(Uri.fromFile(mFile_Profile_photo))
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Log.d(TAG, "onSuccess: uri= "+ uri.toString());
+                                    handleResponseUploadedImage.onSuccess(uri.toString());
+
+                                }
+                            });
                             progressDialog.dismiss();
-                            handleResponseUploadedImage.onSuccess(taskSnapshot);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -320,15 +343,15 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
     }
 
     private interface HandleResponseUploadedImage {
-        void onSuccess(UploadTask.TaskSnapshot taskSnapshot);
+        void onSuccess(String  uriString);
         void onFailure( Exception e);
     }
     public void openGallery(int req_code) {
 
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             Log.e("opencamera", "true");
-            EasyImage.openChooserWithGallery(this, "اختر صورة", req_code);
+            EasyImage.openGallery(this, req_code);
         } else {
             Log.e("opencamera", "false");
             // Do not have permissions, request them now
@@ -339,6 +362,12 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
     private boolean validForm(){
 
 
+        if (mFile_Profile_photo==null){
+            showMessage(this,"من فضلك ادخل صورة ");
+            return false;
+
+        }
+
         if (et_first_name.getText().toString().trim().isEmpty()){
             showMessage(this,"من فضلك ادخل اسمك ");
             return false;
@@ -347,6 +376,12 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
 
         if (!rd_male.isChecked()&&!rd_female.isChecked()){
             showMessage(this,"من فضلك اختر ذكر او انثي");
+            return false;
+
+        }
+
+        if (txt_birthdate.getText().toString().isEmpty()){
+            showMessage(this,"من فضلك ادخل تاريخ ميلادك");
             return false;
 
         }

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.antonio.marinaApp">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+   
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -14,18 +14,30 @@
 
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name="com.example.antonio.marinaApp.MainActivity">
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.example.antonio.marinaApp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.antonio.marinaApp.activities.UserInformationActivity" />
-        <activity android:name="com.example.antonio.marinaApp.activities.PracticeTopicsActivity" />
-        <activity android:name="com.example.antonio.marinaApp.activities.AboutUsActivity" />
-        <activity android:name="com.example.antonio.marinaApp.activities.BiblicalFactsActivity" />
-        <activity android:name="com.example.antonio.marinaApp.activities.UserInfoDetailsActivity"></activity>
+        <activity android:name="com.example.antonio.marinaApp.activities.UserInformationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.example.antonio.marinaApp.activities.PracticeTopicsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.example.antonio.marinaApp.activities.AboutUsActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.example.antonio.marinaApp.activities.BiblicalFactsActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.example.antonio.marinaApp.activities.UserInfoDetailsActivity"/>
     </application>
 
 </manifest>
