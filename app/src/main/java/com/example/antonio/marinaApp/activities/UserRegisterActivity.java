@@ -51,9 +51,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static com.example.antonio.marinaApp.ulities.Helpers.compressImage;
 import static com.example.antonio.marinaApp.ulities.Helpers.showMessage;
 
-public class UserInfoDetailsActivity extends AppCompatActivity {
+public class UserRegisterActivity extends AppCompatActivity {
 
-    String TAG=UserInfoDetailsActivity.class.getName();
+    String TAG = UserRegisterActivity.class.getName();
     //Firebase
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -65,13 +65,13 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
     EditText et_first_name;
 
     @BindView(R.id.edt_email)
-   EditText edt_email;
+    EditText edt_email;
 
-    @BindView(R.id.et_last_name)
-   EditText et_last_name;
+    @BindView(R.id.et_notes)
+    EditText et_notes;
 
     @BindView(R.id.et_middle_name)
-   EditText et_middle_name;
+    EditText et_middle_name;
     @BindView(R.id.rd_male)
     RadioButton rd_male;
 
@@ -92,18 +92,19 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
     ImageView img_calender;
     Unbinder unbinder;
     private File mFile_Profile_photo;
-    private int PROFILE_PHOTO=100;
-    private final int DIALOG_ID_BirthDate=0;
+    private int PROFILE_PHOTO = 100;
+    private final int DIALOG_ID_BirthDate = 0;
     int cur = 0;
     int year_x, month_x, day_x;
     String setToday;
     Calendar myCalendar = Calendar.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info_details);
 
-        unbinder= ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         year_x = myCalendar.get(Calendar.YEAR);
@@ -114,7 +115,6 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
         setToday = sdf.format(myCalendar.getTime());
 
     }
-
 
 
     private void openCalendar() {
@@ -166,6 +166,7 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
         }
 
     }
+
     public static boolean CheckDates(String todayDate, String selectDate) {
 
         SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -185,56 +186,60 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
         return b;
     }
 
-    @OnClick({R.id.btn_cancel,R.id.btn_save,R.id.img_calendar,R.id.user_img_profile})
-    void aVoid(View view){
-        switch (view.getId()){
+    @OnClick({R.id.btn_cancel, R.id.btn_save, R.id.img_calendar, R.id.user_img_profile})
+    void aVoid(View view) {
+        switch (view.getId()) {
             case R.id.user_img_profile:
                 openGallery(PROFILE_PHOTO);
                 break;
 
             case R.id.btn_save:
-             if (validForm()){
-                 uploadImage(new HandleResponseUploadedImage() {
-                     @Override
-                     public void onSuccess(String uriString) {
+                if (validForm()) {
+                    uploadImage(new HandleResponseUploadedImage() {
+                        @Override
+                        public void onSuccess(String uriString) {
 
-                         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-                         DatabaseReference yourRef = rootRef.child("user").push();
-                         User user =new User();
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference yourRef = rootRef.child("user").push();
+                            User user = new User();
 
-                         user.setFirst_name(et_first_name.getText().toString().trim());
+                            user.setFirst_name(et_first_name.getText().toString().trim());
 
-                         if (!et_middle_name.getText().toString().isEmpty())
-                             user.setMidle_name(et_middle_name.getText().toString().trim());
+                            if (!et_middle_name.getText().toString().isEmpty())
+                                user.setMidle_name(et_middle_name.getText().toString().trim());
 
-                         if (!et_last_name.getText().toString().isEmpty())
-                             user.setLast_name(et_last_name.getText().toString().trim());
+                            if (!et_notes.getText().toString().isEmpty())
+                                user.setNotes(et_notes.getText().toString().trim());
 
-                         if (!txt_birthdate.getText().toString().isEmpty())
-                             user.setBithdate(txt_birthdate.getText().toString());
+                            if (!txt_birthdate.getText().toString().isEmpty())
+                                user.setBithdate(txt_birthdate.getText().toString());
 
-                         if (rd_female.isChecked())
-                             user.setGender("female");
-                         else if (rd_male.isChecked())
-                             user.setGender("male");
+                            if (rd_female.isChecked())
+                                user.setGender("female");
+                            else if (rd_male.isChecked())
+                                user.setGender("male");
 
-                         user.setProfile_image_url(uriString);
+                            if (edt_email.getText()!=null) {
+                                user.setEmail(edt_email.getText().toString().trim());
+                            }
 
-                         yourRef.setValue(user);
+                            user.setProfile_image_url(uriString);
 
-                         finish();
+                            yourRef.setValue(user);
 
-                     }
+                            finish();
 
-                     @Override
-                     public void onFailure(Exception e) {
+                        }
 
-                         showMessage(UserInfoDetailsActivity.this,"حدث خطأ حاول مرة اخرة");
+                        @Override
+                        public void onFailure(Exception e) {
 
-                     }
-                 });
+                            showMessage(UserRegisterActivity.this, "حدث خطأ حاول مرة اخرة");
 
-               }
+                        }
+                    });
+
+                }
                 break;
 
 
@@ -255,10 +260,10 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //start upload image cover
 
-        if (resultCode == Activity.RESULT_OK&&data!=null) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
 
             // if (requestCode == EasyImage.RequestCodes.PICK_PICTURE_FROM_GALLERY) {
-            EasyImage.handleActivityResult(requestCode, resultCode, data, UserInfoDetailsActivity.this, new DefaultCallback() {
+            EasyImage.handleActivityResult(requestCode, resultCode, data, UserRegisterActivity.this, new DefaultCallback() {
                 @Override
                 public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
                     //Some error handling
@@ -284,7 +289,7 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                 public void onCanceled(EasyImage.ImageSource source, int type) {
                     // Cancel handling, you might wanna remove taken photo if it was canceled
                     if (source == EasyImage.ImageSource.CAMERA) {
-                        File photoFile = EasyImage.lastlyTakenButCanceledPhoto(UserInfoDetailsActivity.this);
+                        File photoFile = EasyImage.lastlyTakenButCanceledPhoto(UserRegisterActivity.this);
                         if (photoFile != null) photoFile.delete();
                     }
                 }
@@ -301,13 +306,12 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
 
     private void uploadImage(final HandleResponseUploadedImage handleResponseUploadedImage) {
 
-        if(mFile_Profile_photo != null)
-        {
+        if (mFile_Profile_photo != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("جاري التحميل");
             progressDialog.show();
 
-            final StorageReference ref = storageReference.child("images/"+ Uri.fromFile(mFile_Profile_photo).getLastPathSegment());
+            final StorageReference ref = storageReference.child("images/" + Uri.fromFile(mFile_Profile_photo).getLastPathSegment());
             ref.putFile(Uri.fromFile(mFile_Profile_photo))
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -315,7 +319,7 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Log.d(TAG, "onSuccess: uri= "+ uri.toString());
+                                    Log.d(TAG, "onSuccess: uri= " + uri.toString());
                                     handleResponseUploadedImage.onSuccess(uri.toString());
 
                                 }
@@ -328,24 +332,26 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
                             handleResponseUploadedImage.onFailure(e);
-                           //showMessage(UserInfoDetailsActivity.this, "Failed "+e.getMessage());
+                            //showMessage(UserRegisterActivity.this, "Failed "+e.getMessage());
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("تم "+(int)progress+"%");
+                            progressDialog.setMessage("تم " + (int) progress + "%");
                         }
                     });
         }
     }
 
     private interface HandleResponseUploadedImage {
-        void onSuccess(String  uriString);
-        void onFailure( Exception e);
+        void onSuccess(String uriString);
+
+        void onFailure(Exception e);
     }
+
     public void openGallery(int req_code) {
 
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -359,33 +365,34 @@ public class UserInfoDetailsActivity extends AppCompatActivity {
                     req_code, perms);
         }
     }
-    private boolean validForm(){
+
+    private boolean validForm() {
 
 
-        if (mFile_Profile_photo==null){
-            showMessage(this,"من فضلك ادخل صورة ");
+        if (mFile_Profile_photo == null) {
+            showMessage(this, "من فضلك ادخل صورة ");
             return false;
 
         }
 
-        if (et_first_name.getText().toString().trim().isEmpty()){
-            showMessage(this,"من فضلك ادخل اسمك ");
+        if (et_first_name.getText().toString().trim().isEmpty()) {
+            showMessage(this, "من فضلك ادخل اسمك ");
             return false;
 
         }
 
-        if (!rd_male.isChecked()&&!rd_female.isChecked()){
-            showMessage(this,"من فضلك اختر ذكر او انثي");
+        if (!rd_male.isChecked() && !rd_female.isChecked()) {
+            showMessage(this, "من فضلك اختر ذكر او انثي");
             return false;
 
         }
 
-        if (txt_birthdate.getText().toString().isEmpty()){
-            showMessage(this,"من فضلك ادخل تاريخ ميلادك");
+        if (txt_birthdate.getText().toString().isEmpty()) {
+            showMessage(this, "من فضلك ادخل تاريخ ميلادك");
             return false;
 
         }
 
-    return true;
+        return true;
     }
 }

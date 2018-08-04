@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.antonio.marinaApp.R;
 import com.example.antonio.marinaApp.adapters.UserAdapter;
@@ -20,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +26,9 @@ import butterknife.Unbinder;
 
 import static com.example.antonio.marinaApp.ulities.Helpers.onDoIntentTo;
 
-public class UserInformationActivity extends AppCompatActivity {
+public class UserListActivity extends AppCompatActivity {
 
-   private String TAG=UserInformationActivity.class.getSimpleName();
+   private String TAG=UserListActivity.class.getSimpleName();
     @BindView(R.id.container_add_5adem)
     LinearLayout container_add_5adem;
 
@@ -71,7 +68,7 @@ public class UserInformationActivity extends AppCompatActivity {
 
 //                    user.setFirst_name(ds.child("first_name").getValue(String.class));
 //                    user.setMidle_name(ds.child("midle_name").getValue(String.class));
-//                    user.setLast_name(ds.child("last_name").getValue(String.class));
+//                    user.setNotes(ds.child("last_name").getValue(String.class));
 //                    user.setGender(ds.child("gender").getValue(String.class));
 //                    user.setBithdate(ds.child("bithdate").getValue(String.class));
                     userArrayList.add(user);
@@ -79,7 +76,7 @@ public class UserInformationActivity extends AppCompatActivity {
                 }
 
                 if (!userArrayList.isEmpty()||userArrayList!=null) {
-                    UserAdapter adapter = new UserAdapter(userArrayList, UserInformationActivity.this);
+                    UserAdapter adapter = new UserAdapter(userArrayList, UserListActivity.this);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                     rv_all_user.setLayoutManager(mLayoutManager);
                     rv_all_user.setItemAnimator(new DefaultItemAnimator());
@@ -99,7 +96,7 @@ public class UserInformationActivity extends AppCompatActivity {
     void aVoid(View view){
         switch (view.getId()){
             case R.id.container_add_5adem:
-                onDoIntentTo(this,UserInfoDetailsActivity.class);
+                onDoIntentTo(this,UserRegisterActivity.class);
                 break;
 
 

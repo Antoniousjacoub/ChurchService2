@@ -7,7 +7,17 @@ package com.example.antonio.marinaApp.models;
 public class User {
     private String first_name;
     private String midle_name;
-    private String last_name;
+    private String notes;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
     private String gender;
     private String bithdate;
     private String profile_image_url;
@@ -37,12 +47,12 @@ public class User {
         this.midle_name = midle_name;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getGender() {

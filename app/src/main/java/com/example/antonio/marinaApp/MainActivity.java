@@ -1,6 +1,5 @@
 package com.example.antonio.marinaApp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.TextView;
 import com.example.antonio.marinaApp.activities.AboutUsActivity;
 import com.example.antonio.marinaApp.activities.BiblicalFactsActivity;
 import com.example.antonio.marinaApp.activities.PracticeTopicsActivity;
-import com.example.antonio.marinaApp.activities.UserInformationActivity;
+import com.example.antonio.marinaApp.activities.UserListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 onDoIntentTo(this,BiblicalFactsActivity.class);
                 break;
             case R.id.tv_user_info:
-                onDoIntentTo(this,UserInformationActivity.class);
+                onDoIntentTo(this,UserListActivity.class);
                 break;
             case R.id.tv_practice_topics:
                 onDoIntentTo(this,PracticeTopicsActivity.class);
