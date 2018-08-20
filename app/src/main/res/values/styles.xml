@@ -41,19 +41,19 @@
     </style>
 
     <style name="TextAppearance.Text.Regular" parent="android:TextAppearance">
-        <item name="fontPath">source-sans-pro/SourceSansPro-Regular.ttf</item>
+        <!--<item name="fontPath">source-sans-pro/SourceSansPro-Regular.ttf</item>-->
     </style>
 
     <style name="TextAppearance.Text.Bold" parent="android:TextAppearance">
-        <item name="fontPath">source-sans-pro/SourceSansPro-Bold.ttf</item>
+        <!--<item name="fontPath">source-sans-pro/SourceSansPro-Bold.ttf</item>-->
     </style>
 
     <style name="TextAppearance.Text.Light" parent="android:TextAppearance">
-        <item name="fontPath">source-sans-pro/SourceSansPro-Light.ttf</item>
+        <!--<item name="fontPath">source-sans-pro/SourceSansPro-Light.ttf</item>-->
     </style>
 
     <style name="TextAppearance.Text.Italic" parent="android:TextAppearance">
-        <item name="fontPath">source-sans-pro/SourceSansPro-Italic.ttf</item>
+        <!--<item name="fontPath">source-sans-pro/SourceSansPro-Italic.ttf</item>-->
     </style>
 
     <style name="TextStyle">
@@ -115,7 +115,7 @@
 
     <style name="Button.Primary" parent="Button">
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button_primary_bg</item>
+        <!--<item name="android:background">@drawable/button_primary_bg</item>-->
     </style>
 
     <style name="Button.Secondary" parent="Button">
@@ -164,6 +164,6 @@
     <style name="Button.Primary.Quiz.Empty" parent="Button.Primary">
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:background">@drawable/button_primary_bg</item>
+        <!--<item name="android:background">@drawable/button_primary_bg</item>-->
     </style>
 </resources>

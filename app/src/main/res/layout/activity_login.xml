@@ -18,17 +18,18 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_design">
+    android:background="@drawable/bg_design"
+    android:layoutDirection="rtl">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="80dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="80dp"
-        app:cardCornerRadius="7dp"
-        app:cardElevation="22dp">
+        android:background="@drawable/bg_login"
+        android:orientation="vertical">
 
         <TextView
             style="@style/TextStyle.Heading"
@@ -36,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
             android:layout_marginTop="60dp"
-            android:text="@string/login_dummy"
+            android:background="@color/white"
+            android:text="تسجيل الدخول"
             android:textAllCaps="true"
             android:textSize="20sp" />
 
@@ -45,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+android:layoutDirection="rtl"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -62,8 +65,10 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/input_border_bottom"
                     android:cursorVisible="true"
-                    android:gravity="center|left|bottom"
-                    android:hint="@string/email"
+                    android:gravity="center|start|bottom"
+                    android:hint="الايميل"
+
+
                     android:inputType="textEmailAddress"
                     android:maxLength="50"
                     android:paddingBottom="10dp"
@@ -75,14 +80,13 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
                 android:textColorHint="@color/gray"
+                android:gravity="start"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                 app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/et_password"
-                    style="@style/TextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -90,7 +94,8 @@
                     android:layout_marginTop="30dp"
                     android:background="@drawable/input_border_bottom"
                     android:cursorVisible="true"
-                    android:gravity="center|left|bottom"
+                    android:gravity="center|start|bottom"
+                    android:hint="الرقم السري"
                     android:inputType="textPassword"
                     android:maxLength="50"
                     android:paddingBottom="10dp"
@@ -106,12 +111,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
+                android:background="@drawable/background_button"
+
                 android:padding="10dp"
-                android:text="@string/login"
+                android:text="تسجيل الدخول"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:background="@drawable/background_button"
+
+                android:padding="10dp"
+                android:text="انضم الينا"
+                android:textColor="@color/black"
                 android:textSize="18dp" />
         </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </RelativeLayout>
