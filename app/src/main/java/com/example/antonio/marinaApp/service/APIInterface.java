@@ -21,8 +21,9 @@ import retrofit2.http.Query;
 
 
 public interface APIInterface {
+///spaces/{space_id}/environments/{environment_id}/entries/{entry_id}?access_token={access_token}
 
-
+//    /spaces/{space_id}/environments/{environment_id}/content_types/{content_type_id}?access_token={access_token}
     //-----------------------------------------------------------------------------------------------------------------------------
     @GET("/spaces/{space_id}/environments/{environment_id}/entries")
     Call<BiblicalFactsModel> getBiblicalFacts(@Path( "space_id")String space_id,

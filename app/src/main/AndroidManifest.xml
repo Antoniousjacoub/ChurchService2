@@ -51,7 +51,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.NewMemberToFirebaseActivity" />
-        <activity android:name=".activities.BiblicalFactsDetailsActivity"></activity>
+        <activity android:name=".activities.BiblicalFactsDetailsActivity" />
+        <activity android:name=".activities.DesplayVideoActivity"></activity>
     </application>
 
 </manifest>

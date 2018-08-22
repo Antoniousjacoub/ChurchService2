@@ -23,11 +23,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bg_login"
         android:orientation="vertical">
 
@@ -104,6 +104,11 @@ android:layoutDirection="rtl"
 
             </android.support.design.widget.TextInputLayout>
 
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:text="احفظ الايميل والرقم السري"
+                android:layout_height="match_parent" />
             <Button
                 android:id="@+id/btn_server_login"
                 style="@style/Button.Primary"

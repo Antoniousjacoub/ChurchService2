@@ -3,20 +3,82 @@ package com.example.antonio.marinaApp.ulities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by antonio on 6/30/18.
  */
 
 public class Helpers {
+
+
+    public static String getVideoId(String videoUrl) {
+        String videoId = null;
+
+        // Sample YouTube URLs.
+        // "http://www.youtube.com/watch?v=8mKTiD02v3M";
+        // "http://www.youtube.com/v/8mKTiD02v3M?version=3&autohide=1";
+        // "http://youtu.be/8mKTiD02v3M";
+
+        URL url;
+        try {
+
+            url = new URL(videoUrl);
+
+            if (!TextUtils.isEmpty(videoUrl)) {
+                if (videoUrl.contains("?v=")) {
+                    videoId = videoUrl.split("\\?v=")[1];
+                } else if (videoUrl.contains("?version")) {
+                    videoId = url.getPath().split("\\/")[2];
+                } else {
+                    videoId = url.getPath().split("\\/")[1];
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return videoId;
+    }
+
+    public static void saveLoginFeilds(Context context, String key, String value) {
+        SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public static String getLoginFeilds(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        return preferences.getString(key, "");
+    }
+
+    //to know he logging in or not
+    public static void saveLoggingStatus(Context context, String key, boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+    public static boolean getLoggingStatus(Context context, String key) {
+        SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        return preferences.getBoolean(key, false);
+    }
+
 
     public static void onDoIntentTo(Activity activity,Class<?> openActivity){
 

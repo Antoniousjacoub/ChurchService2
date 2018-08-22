@@ -26,12 +26,13 @@
         <ImageView
             android:id="@+id/img_biblical_facts"
             android:layout_width="match_parent"
+            android:src="@drawable/img_elsaleb"
             android:layout_height="200dp" />
         <TextView
             android:id="@+id/tv_biblical_facts_content"
             android:layout_width="match_parent"
             android:padding="10dp"
-
+            android:textSize="20dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

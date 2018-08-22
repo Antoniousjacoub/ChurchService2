@@ -18,6 +18,7 @@ public class BibleFactsController {
     public static void getCastingRequests(Context context,
                                           String space_id,
                                           String environment_id,
+                                          String entry_id,
                                           String access_token ,
                                           Callback<BiblicalFactsModel> callback) {
         APIInterface aPIClient = APIClient.getClient(context).create(APIInterface.class);

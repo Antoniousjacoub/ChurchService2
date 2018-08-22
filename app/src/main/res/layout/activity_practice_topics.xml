@@ -1,15 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layoutDirection="rtl"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.antonio.marinaApp.activities.PracticeTopicsActivity">
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- The ActionBar displayed at the top -->
     <include
         layout="@layout/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_all_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:horizontalSpacing="0dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="0dp" />
+
+</LinearLayout>
+
+
+
+
+

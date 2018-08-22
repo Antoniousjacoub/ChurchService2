@@ -60,12 +60,18 @@ public class BiblicalFactsActivity extends AppCompatActivity {
 
     private void fechData(){
 
-        getCastingRequests(this, URLs.Space_ID, URLs.Environment_id, URLs.Delivery_access_token, new Callback<BiblicalFactsModel>() {
+        getCastingRequests(this, URLs.Space_ID, URLs.Environment_id,URLs.BibilicalFactsEntery_ID, URLs.Delivery_access_token, new Callback<BiblicalFactsModel>() {
             @Override
             public void onResponse(@NonNull Call<BiblicalFactsModel> call, @NonNull Response<BiblicalFactsModel> response) {
                try{
                 if (response.isSuccessful()){
-                    items.addAll(response.body().getItems());
+                    for (Item item:response.body().getItems()){
+
+                        if (item.getFields().getId()==1){
+                            items.add(item);
+
+                        }
+                    }
 
                     BiblicalFactsAdapter adapter = new BiblicalFactsAdapter(items, BiblicalFactsActivity.this);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -75,10 +81,7 @@ public class BiblicalFactsActivity extends AppCompatActivity {
 
 
                     Log.e(TAG, "isSuccessful");
-                    Log.e(TAG, "isSuccessful>>>itemSize"+items.size());
-                    Log.e(TAG, "isSuccessful>>>"+response.body().getItems().get(0).getFields().getTitle());
-                    Log.e(TAG, "isSuccessful>>>"+response.body().getItems().get(0).getFields().getTopicdetails());
-                    Log.e(TAG, "isSuccessful>>>"+response.body().getItems().get(0).getFields().getImageUrl());
+
                 }else {
 
                     Log.e(TAG,"not successfull");

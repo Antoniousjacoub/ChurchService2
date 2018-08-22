@@ -10,4 +10,6 @@ public class URLs {
     public static String Delivery_access_token="b657ecf1ad6d6172d8ac84049a5ad29f2f6092be81abed92948a0944616c4ab2";
     public static String Environment_id="master";
 
+    public static String BibilicalFactsEntery_ID="biblicalFacts";
+    public static String PracticeTopic_ID="practicalTopics";
 }

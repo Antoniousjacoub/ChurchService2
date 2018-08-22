@@ -9,12 +9,13 @@
     <ImageView
         android:id="@+id/img_biblical_facts"
         android:layout_width="match_parent"
+        android:src="@drawable/img_elsaleb"
         android:layout_height="200dp"
         />
     <TextView
         android:id="@+id/tv_title_biblical_facts"
         android:layout_width="match_parent"
-        android:text="gfmlmxl"
+        android:text="الاسم غير موجود"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_gravity="center"
