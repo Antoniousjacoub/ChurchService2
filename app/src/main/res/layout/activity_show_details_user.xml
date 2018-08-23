@@ -72,7 +72,6 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="الاسم الاول "
                     android:enabled="false"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
@@ -106,7 +105,7 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="الاسم الاول "
+
                     android:enabled="false"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
@@ -114,6 +113,59 @@
                     android:textColorHint="@color/cure_green"
                     android:theme="@style/TextLabel" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/phone_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:enabled="false"
+                    android:hint="رقم التليفون:"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/dark_blue"
+                    android:textColorHint="@color/cure_green"
+                    android:theme="@style/TextLabel"  />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+android:gravity="end"
+
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+
+                    android:textColor="@color/dark_blue"
+                    android:textColorHint="@color/cure_green"
+                   />
+
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:paddingBottom="10dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/cure_green"
+
+                   />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -142,7 +194,7 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="الاسم الاول "
+
                     android:enabled="false"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
@@ -178,7 +230,6 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="الاسم الاول "
                     android:enabled="false"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
@@ -213,7 +264,6 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="الاسم الاول "
                     android:enabled="false"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
@@ -250,7 +300,6 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="الاسم الاول "
                     android:enabled="false"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"

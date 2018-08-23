@@ -73,6 +73,19 @@
                     android:layout_gravity="start"
                     android:theme="@style/TextLabel" />
 
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="رقم التليفون"
+                    android:inputType="phone"
+                    android:textColorHint="@color/cure_green"
+                    android:textColor="@color/dark_blue"
+                    android:textAlignment="viewStart"
+                    android:layout_gravity="start"
+                    android:theme="@style/TextLabel" />
+
 
                 <EditText
                     android:id="@+id/et_notes"

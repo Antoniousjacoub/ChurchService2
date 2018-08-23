@@ -63,13 +63,14 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:id="@+id/edt_password"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:hint="الرقم السري"
-
-                android:inputType="textEmailAddress"
+android:gravity="end"
+                android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColorHint="@color/cure_green"
@@ -86,7 +87,8 @@
                 android:layout_marginRight="12dp"
                 android:hint="اعد كتابة الرقم السرى"
 
-                android:inputType="textEmailAddress"
+                android:gravity="end"
+                android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColorHint="@color/cure_green"
@@ -146,7 +148,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="100dp"
                 android:background="@drawable/btn_colored_background"
-                android:text="حفظ"
+                android:text="تسجيل"
                 android:textColor="@color/white"
                 app:layout_constraintVertical_bias="0.516" />
 

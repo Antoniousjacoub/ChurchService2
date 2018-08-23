@@ -66,6 +66,8 @@ public class UserRegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.edt_email)
     EditText edt_email;
+   @BindView(R.id.et_phone_number)
+    EditText et_phone_number;
 
     @BindView(R.id.et_notes)
     EditText et_notes;
@@ -207,6 +209,9 @@ public class UserRegisterActivity extends AppCompatActivity {
 
                             if (!et_middle_name.getText().toString().isEmpty())
                                 user.setMidle_name(et_middle_name.getText().toString().trim());
+
+  if (!et_phone_number.getText().toString().isEmpty())
+                                user.setPhone_number(et_phone_number.getText().toString().trim());
 
                             if (!et_notes.getText().toString().isEmpty())
                                 user.setNotes(et_notes.getText().toString().trim());
@@ -377,6 +382,16 @@ public class UserRegisterActivity extends AppCompatActivity {
 
         if (et_first_name.getText().toString().trim().isEmpty()) {
             showMessage(this, "من فضلك ادخل اسمك ");
+            return false;
+
+        }
+        if (et_phone_number.getText().toString().trim().isEmpty()) {
+            showMessage(this, "من فضلك ادخل رقم تليفونك ");
+            return false;
+
+        }
+        if (et_phone_number.getText().toString().trim().length()<=10) {
+            showMessage(this, "من فضلك ادخل رقم تليفون صحيح ");
             return false;
 
         }
